@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-
 import {
   initializeApp,
   getApps,
   getApp
 } from 'firebase/app';
+
 import {
   getAuth,
   signInAnonymously,
-  onAuthStateChanged,
-  User
+  onAuthStateChanged
 } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import {
   getFirestore
 } from 'firebase/firestore';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

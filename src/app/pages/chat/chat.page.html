@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>chat</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Chat Firebase</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chat</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <div *ngIf="!connected" class="connection">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Conectando con Firebase...</p>
+  </div>
+
+  <div *ngIf="connected">
+
+    <ion-item>
+      <ion-input
+        label="Tu nombre"
+        labelPlacement="stacked"
+        placeholder="Ejemplo: Juan"
+        maxlength="30"
+        [(ngModel)]="nickname">
+      </ion-input>
+    </ion-item>
+
+    <h3>Chat grupal</h3>
+
+    <div class="chat-container">
+
+      <div
+        *ngFor="let msg of messages"
+        class="message"
+        [class.mine]="isMine(msg)">
+
+        <div class="nickname">
+          {{ msg.nickname }}
+        </div>
+
+        <div class="message-text">
+          {{ msg.text }}
+        </div>
+
+        <div class="time" *ngIf="msg.createdAt">
+          {{ msg.createdAt.toDate() | date:'shortTime' }}
+        </div>
+
+      </div>
+
+      <p *ngIf="messages.length === 0">
+        Todavía no hay mensajes.
+      </p>
+
+    </div>
+
+  </div>
+
+  <ion-text color="danger" *ngIf="error">
+    <p>{{ error }}</p>
+  </ion-text>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+
+      <ion-input
+        placeholder="Escribe un mensaje..."
+        maxlength="1000"
+        [(ngModel)]="message"
+        (keyup.enter)="send()">
+      </ion-input>
+
+      <ion-button
+        slot="end"
+        (click)="send()"
+        [disabled]="!connected || sending ||
+                    !message.trim() || !nickname.trim()">
+        Enviar
+      </ion-button>
+
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

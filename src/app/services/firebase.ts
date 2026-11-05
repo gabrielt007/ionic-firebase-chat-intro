@@ -4,7 +4,6 @@ import {
   getApps,
   getApp
 } from 'firebase/app';
-
 import {
   getAuth,
   signInAnonymously,
@@ -14,6 +13,7 @@ import type { User } from 'firebase/auth';
 import {
   getFirestore
 } from 'firebase/firestore';
+
 import { environment } from '../../environments/environment';
 
 @Injectable({

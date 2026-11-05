@@ -7,6 +7,7 @@ import {
   limit,
   onSnapshot,
   serverTimestamp,
+  type DocumentReference,
   type Timestamp
 } from 'firebase/firestore';
 import { Observable } from 'rxjs';
@@ -28,7 +29,7 @@ export class ChatService {
 
   private firebase = inject(FirebaseService);
 
-  async sendMessage(text: string, nickname: string) {
+  async sendMessage(text: string, nickname: string): Promise<DocumentReference> {
 
     const uid = this.firebase.getCurrentUid();
     const cleanText = text.trim();
